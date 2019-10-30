@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.google.common.util.concurrent.MoreExecutors;
 import org.apache.kafka.clients.consumer.OffsetAndMetadata;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.connect.errors.DataException;
@@ -137,7 +138,7 @@ public class AmazonKinesisSinkTask extends SinkTask {
 			else
 				f = addUserRecord(kinesisProducer, streamName, partitionKey, usePartitionAsHashKey, sinkRecord);
 
-			Futures.addCallback(f, callback);
+			Futures.addCallback(f, callback, MoreExecutors.directExecutor());
 
 		}
 	}
